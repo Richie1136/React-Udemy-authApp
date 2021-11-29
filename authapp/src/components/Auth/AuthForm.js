@@ -13,6 +13,10 @@ const AuthForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+
+    const eneteredEmail = emailRef.current.value
+    const eneteredPassword = passwordRef.current.value
+
   }
 
 
