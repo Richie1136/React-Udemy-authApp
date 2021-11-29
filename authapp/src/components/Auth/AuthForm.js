@@ -2,6 +2,8 @@ import { useState, useRef } from 'react';
 
 import './AuthForm.css';
 
+const KEY = process.env.REACT_APP_API_KEY
+
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
   const emailRef = useRef()
@@ -16,6 +18,19 @@ const AuthForm = () => {
 
     const eneteredEmail = emailRef.current.value
     const eneteredPassword = passwordRef.current.value
+
+    if (isLogin) {
+
+    } else {
+      fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${KEY}`, {
+        method: 'POST',
+        body: JSON.stringify({
+          email: eneteredEmail,
+          password: eneteredPassword,
+          returnSecureToken: true
+        })
+      })
+    }
 
   }
 
