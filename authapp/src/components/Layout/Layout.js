@@ -1,11 +1,10 @@
+import MainNavigation from '../navigation/MainNavigation';
 
-import MainNavigation from './MainNavigation';
-
-const Layout = (props) => {
+const Layout = ({ children }) => {
   return (
     <>
       <MainNavigation />
-      <main>{props.children}</main>
+      <main>{children}</main>
     </>
   );
 };

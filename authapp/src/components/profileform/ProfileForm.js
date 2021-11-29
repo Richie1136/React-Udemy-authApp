@@ -1,13 +1,13 @@
-import classes from './ProfileForm.module.css';
+import './ProfileForm.css';
 
 const ProfileForm = () => {
   return (
-    <form className={classes.form}>
-      <div className={classes.control}>
+    <form className='forms'>
+      <div className='controls'>
         <label htmlFor='new-password'>New Password</label>
         <input type='password' id='new-password' />
       </div>
-      <div className={classes.action}>
+      <div className='actions'>
         <button>Change Password</button>
       </div>
     </form>
