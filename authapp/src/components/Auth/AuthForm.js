@@ -6,6 +6,7 @@ const KEY = process.env.REACT_APP_API_KEY
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const [loading, setLoading] = useState(false);
   const emailRef = useRef()
   const passwordRef = useRef()
 
@@ -18,9 +19,8 @@ const AuthForm = () => {
 
     const eneteredEmail = emailRef.current.value
     const eneteredPassword = passwordRef.current.value
-
+    setLoading(true)
     if (isLogin) {
-
     } else {
       fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${KEY}`, {
         method: 'POST',
@@ -28,7 +28,22 @@ const AuthForm = () => {
           email: eneteredEmail,
           password: eneteredPassword,
           returnSecureToken: true
-        })
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(res => {
+        setLoading(false)
+        if (res.ok) {
+        } else {
+          return res.json().then(data => {
+            let errorMessage = 'Authentication failed!'
+            // if (data && data.error && data.error.message) {
+            //   errorMessage = data.error.message
+            // }
+            alert(errorMessage)
+          })
+        }
       })
     }
 
@@ -38,7 +53,7 @@ const AuthForm = () => {
   return (
     <section className='auth'>
       <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className='control'>
           <label htmlFor='email'>Your Email</label>
           <input type='email' id='email' required ref={emailRef} />
@@ -48,7 +63,8 @@ const AuthForm = () => {
           <input type='password' id='password' required ref={passwordRef} />
         </div>
         <div className='actions'>
-          <button>{isLogin ? 'Login' : 'Create Account'}</button>
+          {!loading && <button> {isLogin ? 'Login' : 'Create Account'}</button>}
+          {loading && <p>Loading</p>}
           <button
             type='button'
             className='toggle'
@@ -58,7 +74,7 @@ const AuthForm = () => {
           </button>
         </div>
       </form>
-    </section>
+    </section >
   );
 };
 
