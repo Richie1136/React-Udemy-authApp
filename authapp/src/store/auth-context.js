@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 const AuthContext = React.createContext({
   token: '',
@@ -12,19 +12,13 @@ export const AuthContextProvider = ({ children }) => {
 
   const userLoggedIn = !!token
 
-  useEffect(() => {
-    const storedinfo = localStorage.getItem("isLoggedIn")
-    if (storedinfo === 'Logged In') {
-      setIsLoggedin(true)
-    }
-  }, [])
 
   const logoutHandler = () => {
     localStorage.removeItem("isLoggedIn")
     setToken(null)
   }
 
-  const loginHandler = () => {
+  const loginHandler = (token) => {
     localStorage.setItem('isLoggedIn', 'Logged In')
     setToken(token)
   }
