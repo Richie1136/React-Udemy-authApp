@@ -1,4 +1,5 @@
 import { useRef, useContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import './ProfileForm.css';
 import AuthContext from '../../store/auth-context';
 
@@ -7,6 +8,9 @@ const KEY = process.env.REACT_APP_API_KEY
 
 const ProfileForm = () => {
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate()
+
 
   const newPasswordRef = useRef()
 
@@ -30,6 +34,7 @@ const ProfileForm = () => {
       }
     }).then(res => {
       setLoading(false)
+      navigate('/')
       if (res.ok) {
         return res.json()
       } else {
