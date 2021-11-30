@@ -9,6 +9,10 @@ const MainNavigation = () => {
 
   const context = useContext(AuthContext)
 
+  const handleLogout = () => {
+    context.onLogout()
+  }
+
   const isLoggedin = context.isLoggedIn
   return (
     <header className='header'>
@@ -29,7 +33,7 @@ const MainNavigation = () => {
           )}
           {isLoggedin && (
             <li>
-              <button>Logout</button>
+              <button onClick={handleLogout}>Logout</button>
             </li>
           )}
         </ul>
