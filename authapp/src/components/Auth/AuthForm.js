@@ -1,11 +1,15 @@
 import { useState, useRef, useContext } from 'react';
 import AuthContext from '../../store/auth-context';
+import { useNavigate } from 'react-router-dom';
 
 import './AuthForm.css';
 
 const KEY = process.env.REACT_APP_API_KEY
 
 const AuthForm = () => {
+
+  const navigate = useNavigate()
+
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const emailRef = useRef()
@@ -56,6 +60,7 @@ const AuthForm = () => {
       }
     }).then(data => {
       context.onLogin(data.idToken)
+      navigate('/')
     }).catch(err => {
       alert(err.message)
     })
