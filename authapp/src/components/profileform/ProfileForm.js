@@ -7,7 +7,7 @@ const KEY = process.env.REACT_APP_API_KEY
 
 
 const ProfileForm = () => {
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   const newPasswordRef = useRef()
 
@@ -17,31 +17,20 @@ const ProfileForm = () => {
     e.preventDefault()
 
     const enteredNewPassword = newPasswordRef.current.value
-    setLoading(true)
+    // setLoading(true)
 
     fetch(`https://identitytoolkit.googleapis.com/v1/accounts:update?key=${KEY}`, {
       method: 'POST',
       body: JSON.stringify({
         idToken: context.token,
         password: enteredNewPassword,
-        returnSecureToken: true
+        returnSecureToken: false
       }),
       headers: {
         'Content-Type': 'application/json'
       }
     }).then(res => {
-      setLoading(false)
-      if (res.ok) {
-        return res.json()
-      } else {
-        return res.json().then(data => {
-          let errorMessage = "Authentication failed!"
-          if (data && data.error && data.error.message) {
-            errorMessage = data.error.message
-          }
-          throw new Error(errorMessage)
-        })
-      }
+      // setLoading(false)
     })
   }
   return (
