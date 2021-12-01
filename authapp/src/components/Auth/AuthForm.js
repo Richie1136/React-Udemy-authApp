@@ -59,7 +59,8 @@ const AuthForm = () => {
         })
       }
     }).then(data => {
-      context.onLogin(data.idToken)
+      const expirationTime = new Date((new Date().getTime() + (+data.expiresIn * 1000)))
+      context.onLogin(data.idToken, expirationTime)
       navigate('/')
     }).catch(err => {
       alert(err.message)
