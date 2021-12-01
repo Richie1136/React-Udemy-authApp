@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 
 let logoutTimer;
 
@@ -45,14 +45,16 @@ export const AuthContextProvider = ({ children }) => {
   const userLoggedIn = !!token
 
 
-  const logoutHandler = () => {
+  const logoutHandler = useCallback(() => {
     localStorage.removeItem("isLoggedIn")
+    localStorage.removeItem('expiration')
+
     setToken(null)
 
     if (logoutTimer) {
       clearTimeout(logoutTimer)
     }
-  }
+  }, [])
 
   const loginHandler = (token, expirationTime) => {
     localStorage.setItem('isLoggedIn', token)
@@ -64,9 +66,10 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (tokenData) {
+      console.log(tokenData.time)
       logoutTimer = setTimeout(logoutHandler, tokenData.time)
     }
-  }, [tokenData])
+  }, [tokenData, logoutHandler])
 
   const contextValue = {
     token,
